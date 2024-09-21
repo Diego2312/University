@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Dec 21 15:02:13 2023
+
+@author: Owner
+"""
+
+HW8req Algorithm
+
+
+I used a recursive function to create a tree with all possible changes for all quasi-anagrams of thepharaohs_cypher dictionary.
+To do this I created a function that for every key of the dictionary, identified all possible quasi-anagrams. In more detail, for every sequence of lenght key + 1, I ran a new function (tracker). The idea of this function is to sort both the sequence and key and compare index by index, allowingfor one wrong comparison.
+Now with each quasi-anagram, I create a new tree and add that to the current one. This is process is done recursevely covering all possible changes. Finally, using the IsLeaf() method from the Tree module, I identify the leafs and append them to a list.
+Finally to get the shortest and sorted lefs, I simply sort the list by lenght and create a new one filtered by all the elements from the orignal list, but only the one with the lenght of the first element(the shortest). The return is a set with the elements of this new list.
+

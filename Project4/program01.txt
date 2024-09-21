@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 29 15:06:40 2023
+
+@author: Owner
+"""
+
+For HW6req, I defined 1 main function (jigsaw) and 3 other subfunctions(image_grid, rotate_matrix and compare images).
+
+
+Sumary
+
+First thing I do is obtain the decryption key from the distorded image by calling the function compare images. In order to compare the images and obtain the key,
+this function calls the function image_grid on both plain and distorded image, which retunrs a list of all the squares on the given image. With these squares, I
+compare them by rotating the distorted square until it is equal to the plain sqaure. With this, I add to a new list (key) every rotation done.
+Now with the key I can translate the encrypted text. To do this, I use the remainder of the division of the position of the current encrypted character by the 
+lenght of the key. This value will tell me which character of the key must be used to decrypt. Every decryption is added to a list and later transformed to a string
+and written on a the new output_file.
+
+
+Detailed
+
+image_grid:
+ This functions returns a list with all squares of a given lenght in an image. To do this I use a for loop that moves from left (0,0) to the right (-side,0) by 'side'
+every iteration and goes back to the left every time when the last square to the right of the row is reached. So to do this I basically add 'side' to a variable x every iteration
+and when x is equal to the number of rows - 'side', x = 0 and y += 'side'. This will put me at the top left corner of each square every iteration. By having the top left corner, I
+slice the matrix from the current position down 'side' and to right 'side' ([x:x+tile_size], then with a for loop [y:y+tile_size] for every row). This will give me every square of
+the matrix.
+
+rotate_image:
+ This function returns a 90 degree rotation of any given matrix. To do this I get all collumns from the original matrix and append them to new lis col (with a for loop).
+Then in to a new list rot_matrix, I append all the collumns of every row reversed(also with a for loop).
+ 
+compare_imges:
+ This function returns the decryption key. In order to do this I call the function image_grid to get the squares of the distorded and then again to get the squares of the plain image.
+And then in a for that iterates through the range of both list of squares, I have a while loop that runs while the squares are different. This loop simply rotates the distorded square 
+and adds 1 to a variable count until both squares are equal. After this loop, the variable count determines the type of rotation and this type is appended to the key. Note: if the images
+are already the same no rotations will be made and the count is just 0.
+
+jigsaw:
+ This function decrypts the text and returns the key. To do this, first the key is acquired by calling the function compare images on the plain and distorted images. Then, with a for loop
+that checks the remainder of the current position of the encrypted character by the length of the key, the decryption is made. A if statement is used for each type of rotation and try and
+except is used to handle IndexError for the 'F' rotation. Every decrypted character is concatenated to an empty string which is later written in a new output_file. The function finally
+divides the key in to strings of every row of squares compared and retunrns it. Note: I may have not mentioned it, but any necessary conversion from list to string, or the other way around was made.
+
+
+
+My code is currently passing all tests on my computer, but timing out on 2 tests on the VM. Any advice and suggestions on how to make my code more efficient is greatly appreciated.
+
+
