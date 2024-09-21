@@ -1,0 +1,63 @@
+For this program I wrote 1 main function Umkansanize and 3 smaller ones Translate, extract names and srt.
+
+Translate:
+
+My function translate takes as input a filepath, which must contain a txt file to be read.
+From this txt file (which contains the songs in original language) the function returns the translation and how long the cong is.
+
+In order to translate, first the song must be reversed and the lines must go away. For this i used readlines, stripped and reversed each line
+
+Now that the song is ready to be translated, my idea was to make every note in the string 2 characters long, to later split it in to a list of every 2 strings and 
+by iterating through this new list, translate each item in the list. 
+To make every note two characters long, I added a '_' to the end of every note that was not followed by a '+' or a '-'. Then, I split his new string in to a list of every 2 substrings in the string.
+With this list ready, I iterate through the list adding the translations with their lenghts to a final string. For this proccess, If the note is not followed by itself I ajust add the note translated and 1 to the final string,
+if the note is followed by itself, I create a sliced list from the current note to the end of the list and while the note repeats I add 1 to count, which when the note stops repeating is added to the final string with the translation.
+At the same time as translating, theres a variable counts, which keeps track of the length of all notes, so I can return the lenght of the entire song.
+The actual translation is done by using a dictionary which contains the notes as keys and their translations as values.
+
+Finally the function returns the translated song and it`s lenght
+
+
+
+
+Extract names:
+
+My function extract names takes as input a file path and outputs the song names and their file names of the index file.
+
+To do this the I use the file path to access the index file. I create a list with every line stripped in the index file (using readlines and strip) and extract the names and file names.
+The actual extraction is done by spliting each line and taking the index value desired. These go in to two lists containing all names and file names.
+
+Finally this function returns the song names and file names
+
+
+
+Srt:
+
+My function Srt is a key function used to sort the index file first by decreasing song lenght, then by alphabetical order.
+
+To do this the function takes tuples and first sorts by - tuple[1] (which is the length of the song) then by alphabetical order (using character ords)
+
+Finally this function returns the keys to be sorted
+
+
+
+Umkansanize
+
+My function Umkansanize is the main function which uses all other functions. Umkansanize takes as input a source_root (filepath to file with songs to be translated) and a target_root(name of the file which much contain songs translated).
+
+The objective is to create a file structure with all translated songs like the original songs file structure, including the index file.
+
+To do this, first a dictionary containing all notes as keys and their translations as values is created (to later be used by translate function).
+Now the file structure must be created. To do this, first I extract the file names and song names from the index file using function extract_names.
+Then, I create a list with paths to where every song is, but not including the actual song in the path. Now I create the main file with the target route.
+From this, using the function makedirs in a loop, I create all the directories using the paths and adding the song names to the end of the paths, so the name of the song are the actual name of the files.
+At the same time, I write on the new song files the translation of it`s corresponding original song file. Also, in the same loop I create a dictionary with all song names (from extract_names) and lenghts (from translate).
+Now I sort the dicionary using the srt function and create the index file in the main file (writing the song names and lenghts, sorted).
+
+Finally the function returns the dictionary.
+
+
+
+
+I realize how this code is not efficient, but I could not find another (more efficient) way of writing it.
+Feedback would really appreciated

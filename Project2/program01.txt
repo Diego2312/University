@@ -1,0 +1,72 @@
+Dividing the Homework in to the sub-problems:
+
+Decode digits:
+
+For this function, given a list of bases and a list of digits the output should be a final integer. A variable 'num'
+is initialized from 0, then using a for loop the value that each digit represents is added to 'num'. To find each value
+the calculation of digit[i]*base[i]**i is made. From this, the output is the equivalent integer.
+
+
+
+Generate digits:
+
+For this function, given a list of bases, the output should be a list with all possible combinations of digits
+compatible with the bases. The basic idea to know how to solve this, is to know the total number of possible combinations.
+From this, it is possible to know how many times each digit changes (1 is added)('law of change') and change an initial
+list n times appending each change to a final list.
+
+Step one: Initialize the lists that will be used to store each combination and all possible combinations.
+
+
+Step two: The first combination 'first_comb' (all zeroes), must be created from the length of the list of bases given.
+
+
+Step three: the number of total combinations must be found. To this simply multiply every base in the list. For this a
+for loop was used multiplying every base by the last, every iteration. (the variable starts at 1, because this is
+multiplication and not addition).
+
+
+Step four: calculate the 'law of change' for each base. To do this the calculation:
+ total combinations / i * (i+1) * (i+2) * (i+3)... (i+ len(bases) -1)
+To make it easier to understand, in the case of [2, 5, 3, 2]:
+[0] 2 will change 2*5*3*2 times 60 every 60/60 = every 1 loop
+[1] 5 will change 5*3*2 times 30 every 60/30 = every 2 loops
+[2] 3 will change 3*2 times 6 every 60/6 = every 10 loops
+[3] 2 will change 2 times 4 every 60/2 = every 30
+
+A for loop was used to do this, appending the 'law of change' of each to the list 'every_n'. To calculate the
+multiplications of any base at any index of any length of list, 'bases' is sliced from the current base index to the
+last index. (NOTE: the length of every_n is the same as the length of bases, which means the index of the base and
+equivalent law of change are the same)
+
+
+Step five: the main for loop that will loop for the number of total combinations times, changing the 'first_comb' each
+iteration according the 'law of change' of each base and appending it to the final list 'all_combinations'
+
+The main for loop will loop for the number of total combinations times. In each one of the iterations, a new for loop
+will check the current iteration and see if it respects the law of change for each digit. Since it is not possible to
+write just every 1 loop, every 5 loops, every n loops, a way to do this is to take the division of the current iteration
+by the number of every times the base should change and check if the rest is equal to 0 (if yeas, then change). Now with
+the loop always adding one to the bases respecting every 'law of change', each base must go back to 0 when it reaches n
+(before appending, since every base must reach n-1).
+With these conditions set, every end of the main loop must add one to counter to keep track of the current iteration and
+append the current combination to the list 'all_combinations'
+
+
+
+Find doubles:
+
+For this function, given a list bases, the output should be every integer that can be represented more than one way using
+these bases.
+
+First step: Generate all possible combinations of digits given the list 'bases', using the function 'generate_digits'.
+
+Second step: Initialize the list that will contain all integers, and the set that will contain all integers that can be
+represented more than once.
+
+Third step: Find all integers from the all combinations and bases using the function 'generate digits'
+
+Forth step: Check for the integers that appear more than once in all_ints using a for loop and add them to the set
+'final_ints'
+
+
